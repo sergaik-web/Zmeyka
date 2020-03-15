@@ -94,9 +94,16 @@ butStart.addEventListener("click", function () {
 let checkGameOver = () => {
     let massElem = document.querySelectorAll('.hvost');
     let massData = [];
-    massElem.forEach(e => massData.push([e.style.gridRow, e.style.gridColumn]));
-    for (let i=1; i<massData.length; i++) {
-        console.log(massData[i]);
+    let massObj = {};
+    massElem.forEach(e => massData.push([Number(e.style.gridRow.split(' ')[0]), Number(e.style.gridColumn.split(' ')[0])]));
+    for (let i=0; i<massData.length; i++) {
+        let a = massData[i];
+        if (massObj[a] !== undefined) {
+            ++massObj[a];
+        } else {massObj[a] = 1}
+    }
+    for (let key in massObj){
+        if (massObj[key] !== 1) {return true};
     }
 };
 
