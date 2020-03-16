@@ -9,6 +9,9 @@ let historyCord = [];
 let time;
 zmey.style.gridColumn = gorizont;
 zmey.style.gridRow = vertical;
+let butRestart = document.createElement('button');
+butRestart.id = 'restart';
+
 
 //нажатие на клавишу
 document.addEventListener("keydown", function (e) {
@@ -38,7 +41,7 @@ let moveZmey = () => {
     }
 
     if (checkGameOver()) {
-        clearInterval(time);
+        gameOver();
     }
 
 
@@ -103,10 +106,49 @@ let checkGameOver = () => {
         } else {massObj[a] = 1}
     }
     for (let key in massObj){
-        if (massObj[key] !== 1) {return true};
+        if (massObj[key] !== 1) {return true}
     }
 };
 
 let gameOver = () => {
     clearInterval(time);
+    let butRestart = document.createElement('button');
+    butRestart.id = 'restart';
+    butRestart.textContent = 'Restart';
+    let paragGameOver = document.createElement('p');
+    paragGameOver.textContent = 'GAME OVER';
+    paragGameOver.style.fontSize = 18+'px';
+    paragGameOver.style.textAlign = 'center';
+    paragGameOver.style.color = 'red';
+    paragGameOver.style.fontWeight = 'bold';
+    let windowGameOver = document.createElement('div');
+    windowGameOver.id = 'divGameover';
+    windowGameOver.style.display = 'grid';
+    windowGameOver.style.position = 'absolute';
+    windowGameOver.style.top = 0;
+    windowGameOver.style.zIndex = 2;
+    windowGameOver.style.width = 100+'%';
+    windowGameOver.style.justifyContent = 'center';
+    windowGameOver.style.alignContent = 'center';
+    windowGameOver.style.backgroundColor = 'rgba(85, 107, 47, 0.7)';
+    windowGameOver.append(paragGameOver);
+    windowGameOver.append(butRestart);
+    document.getElementById('game-display').append(windowGameOver);
+    butRestart.addEventListener('click', function () {
+        windowGameOver.remove();
+        restart();
+    });
 };
+
+let restart = () => {
+    gorizont = 1;
+    vertical = 1;
+    historyCord = [];
+    zmey.style.gridColumn = gorizont;
+    zmey.style.gridRow = vertical;
+    let allHvost = document.querySelectorAll('.hvost');
+    allHvost.forEach(e => e.id !== 'zmeya' ? e.remove(): e);
+};
+
+
+
